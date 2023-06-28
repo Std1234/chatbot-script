@@ -55,20 +55,21 @@
     document.body.appendChild(chatButton);
     document.body.appendChild(chatWidget);
 
-    async function query(data) {
-        const response = await fetch(
-            "https://frontend-production-eb9a.up.railway.app/api/v1/prediction/8ae09b59-b273-42e8-bc4d-1991d70fb60a",
-            {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            }
-        );
-        const result = await response.json();
-        return result;
-    }
+async function query(data) {
+    const response = await fetch(
+        "https://frontend-production-eb9a.up.railway.app/api/v1/prediction/8ae09b59-b273-42e8-bc4d-1991d70fb60a",
+        {
+            method: "POST",
+            body: data
+        }
+    );
+    const result = await response.json();
+    return result;
+}
+
+query({"question": "Hey, how are you?"}).then((response) => {
+    console.log(response);
+});
 
     chatInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
