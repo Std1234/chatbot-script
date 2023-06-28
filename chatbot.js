@@ -11,12 +11,39 @@
     chatWidget.style.padding = '10px';
     chatWidget.style.overflow = 'auto';
     chatWidget.style.display = 'none';
+    chatWidget.style.fontFamily = 'Arial, sans-serif';
+
+    var chatTitle = document.createElement('h2');
+    chatTitle.textContent = 'Chat with us';
+    chatTitle.style.textAlign = 'center';
+    chatWidget.appendChild(chatTitle);
+
+    var chatMessages = document.createElement('div');
+    chatMessages.style.height = '80%';
+    chatMessages.style.overflowY = 'scroll';
+    chatWidget.appendChild(chatMessages);
+
+    var chatInput = document.createElement('input');
+    chatInput.style.width = '100%';
+    chatInput.style.height = '20%';
+    chatInput.placeholder = 'Type your message here...';
+    chatWidget.appendChild(chatInput);
 
     var chatButton = document.createElement('button');
     chatButton.innerHTML = 'Chat with us';
     chatButton.style.position = 'fixed';
     chatButton.style.bottom = '0';
     chatButton.style.right = '0';
+    chatButton.style.backgroundColor = '#008CBA'; // Blue color
+    chatButton.style.color = 'white';
+    chatButton.style.border = 'none';
+    chatButton.style.padding = '15px 32px';
+    chatButton.style.textAlign = 'center';
+    chatButton.style.textDecoration = 'none';
+    chatButton.style.display = 'inline-block';
+    chatButton.style.fontSize = '16px';
+    chatButton.style.margin = '4px 2px';
+    chatButton.style.cursor = 'pointer';
     chatButton.onclick = function() {
         if (chatWidget.style.display === 'none') {
             chatWidget.style.display = 'block';
@@ -43,17 +70,17 @@
         return result;
     }
 
-    chatWidget.addEventListener('keypress', function(e) {
+    chatInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             var message = e.target.value;
             e.target.value = '';
             var messageElement = document.createElement('p');
             messageElement.textContent = 'You: ' + message;
-            chatWidget.appendChild(messageElement);
+            chatMessages.appendChild(messageElement);
             query({"question": message}).then((response) => {
                 var replyElement = document.createElement('p');
                 replyElement.textContent = 'Bot: ' + response.answer;
-                chatWidget.appendChild(replyElement);
+                chatMessages.appendChild(replyElement);
             });
         }
     });
